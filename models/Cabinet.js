@@ -34,6 +34,7 @@ const CabinetSchema = new mongoose.Schema({
     default: false,
   },
   username: { type: String, default: "Unknown" },
+  createdAt: Date,
 });
 
 // Populate the address object with information provided by geocoder using google's API.
