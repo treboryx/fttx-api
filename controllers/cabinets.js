@@ -2,6 +2,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middleware/async");
 const Cabinet = require("../models/Cabinet");
 const { get, set } = require("../config/redis");
+const { submit } = require("../utils/discord");
 
 // @desc      Get all cabinets
 // @route     GET /api/v1/cabinets
@@ -50,13 +51,19 @@ exports.createCabinet = asyncHandler(async (req, res, next) => {
     success: true,
     data: cabinet,
   });
+
+  submit(
+    `New cabinet added with ID ${cabinet._id} by ${
+      cabinet.nickname ? cabinet.nickname : "Unknown"
+    }`
+  );
 });
 
 // @desc      Update cabinet information
 // @route     PUT /api/v1/cabinets/:id
 // @access    Protected
 exports.updateCabinet = asyncHandler(async (req, res, next) => {
-  const cabinet = await cabinet.findByIdAndUpdate(req.params.id, req.body, {
+  const cabinet = await Cabinet.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
