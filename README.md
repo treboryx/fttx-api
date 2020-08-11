@@ -17,4 +17,8 @@ npm run dev
 npm start
 ```
 
-The API is live at [api.fttx.gr](https://api.fttx.gr) (currently offline)
+The API is live at [api.fttx.gr](https://api.fttx.gr)
+
+<p align="center">
+    • <a href="https://github.com/fttx-gr/fttx-api/wiki" target="_blank">Example Requests</a> •
+</p>
