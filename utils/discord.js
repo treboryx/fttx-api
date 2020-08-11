@@ -5,14 +5,13 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
   const client = new Client();
   const fetch = require("node-fetch");
   client.prefix = "fttx";
-  client.on("ready", () => {
+  let channel;
+  client.on("ready", async () => {
+    channel = await client.channels.cache.get(process.env.DISCORD_CHANNEL);
     console.log(`[DISCORD] Connected as ${client.user.tag}.`);
+    channel.send("Connected!");
   });
-
   const submit = async (text) => {
-    const channel = await client.channels.cache.get(
-      process.env.DISCORD_CHANNEL
-    );
     channel.send(text);
   };
 
@@ -53,8 +52,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       message.channel.send(`Cabinet with ID ${cabinet._id} has been approved.`);
     }
     if (cmd === "status") {
-      let stats = await fetch("https://api.fttx.gr");
-      stats = stats.json();
+      const stats = await fetch("https://api.fttx.gr").then((r) => r.json());
       message.channel.send(
         `<a:heartbeat:691717195616485397> Bot Heartbeat: ${Math.round(
           client.ws.ping

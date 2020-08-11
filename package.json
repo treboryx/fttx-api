@@ -4,7 +4,7 @@
   "description": "API for fttx.gr",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production node server",
+    "start": "ENVIRONMENT=production node server",
     "dev": "nodemon app"
   },
   "dependencies": {

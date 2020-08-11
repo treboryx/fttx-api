@@ -31,7 +31,7 @@ const app = express();
 app.use(express.json());
 
 // Dev logging middleware
-if (process.env.NODE_ENV === "development") {
+if (process.env.ENVIRONMENT === "development") {
   app.use(morgan("dev"));
 } else {
   app.use(morgan("short"));
@@ -91,7 +91,8 @@ const PORT = process.env.PORT || 5000;
 app.listen(
   PORT,
   console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+    `Server running in ${process.env.ENVIRONMENT} mode on port ${PORT}`.yellow
+      .bold
   )
 );
 
