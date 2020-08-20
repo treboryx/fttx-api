@@ -44,6 +44,8 @@ exports.createCenter = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`There is already a center in those coordinates`, 400)
     );
   }
+  // make sure approved isn't true
+  req.body.approved = false;
   // otherwise add center to the database
   const center = await Center.create(req.body);
 

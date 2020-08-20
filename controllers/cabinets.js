@@ -44,6 +44,8 @@ exports.createCabinet = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`There is already a cabinet in those coordinates`, 400)
     );
   }
+  // make sure approved is not true
+  req.body.approved = false;
   // otherwise add cabinet to the database
   const cabinet = await Cabinet.create(req.body);
 
