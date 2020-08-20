@@ -24,6 +24,7 @@ connectDB().catch((err) => {
 
 // Route files
 const cabinets = require("./routes/cabinets");
+const centers = require("./routes/centers");
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use(cors());
 
 // Mount routers
 app.use("/api/v1/cabinets", cabinets);
+app.use("/api/v1/centers", centers);
 
 app.use(errorHandler);
 
