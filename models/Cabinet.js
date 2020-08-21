@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const geocoder = require("../utils/geocoder");
+const ErrorResponse = require("../utils/errorResponse");
 
 const CabinetSchema = new mongoose.Schema({
   id: { type: Number, default: 0 },
@@ -39,24 +40,33 @@ const CabinetSchema = new mongoose.Schema({
 
 // Populate the address object with information provided by geocoder using google's API.
 CabinetSchema.pre("save", async function (next) {
-  const res = await geocoder.reverse({
-    lat: this.position.lat,
-    lon: this.position.lng,
-  });
+  try {
+    const res = await geocoder.reverse({
+      lat: this.position.lat,
+      lon: this.position.lng,
+    });
 
-  this.address = {
-    full: res[0].formattedAddress,
-    streeNumber: res[0].streetNumber,
-    streetName: res[0].streetName,
-    city: res[0].city,
-    country: res[0].country,
-    countryCode: res[0].countryCode,
-    zipcode: res[0].zipcode,
-    administrationLevels: res[0].administrationLevels,
-  };
+    this.address = {
+      full: res[0].formattedAddress,
+      streeNumber: res[0].streetNumber,
+      streetName: res[0].streetName,
+      city: res[0].city,
+      country: res[0].country,
+      countryCode: res[0].countryCode,
+      zipcode: res[0].zipcode,
+      administrationLevels: res[0].administrationLevels,
+    };
 
-  this.createdAt = Date.now();
-  next();
+    this.createdAt = Date.now();
+    next();
+  } catch (e) {
+    return next(
+      new ErrorResponse(
+        "Cannot geocode these coordinates. They are most likely not valid coordinates.",
+        400
+      )
+    );
+  }
 });
 
 module.exports = mongoose.model("Cabinet", CabinetSchema);

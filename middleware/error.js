@@ -2,7 +2,7 @@ const ErrorResponse = require("../utils/errorResponse");
 
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
-
+  console.log(err);
   error.message = err.message;
 
   // Log errors if the application is running in development environment
