@@ -25,7 +25,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       .split(/ +/g);
     const cmd = args[0];
     if (cmd === "approve") {
-      const check = await Cabinet.findById(args[0]);
+      const check = await Cabinet.findById(args[1]);
       if (check) {
         if (check.approved)
           return message.channel.send(
@@ -36,7 +36,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
           "Cabinet with that ID does not exist in the FTTx.gr database"
         );
       }
-
+      console.log(args[1]);
       const cabinet = await Cabinet.findByIdAndUpdate(
         args[1],
         { approved: true },
@@ -52,7 +52,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       message.channel.send(`Cabinet with ID ${cabinet._id} has been approved.`);
     }
     if (cmd === "verify") {
-      const check = await Cabinet.findById(args[0]);
+      const check = await Cabinet.findById(args[1]);
       if (check) {
         if (check.verified)
           return message.channel.send(
