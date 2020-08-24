@@ -51,6 +51,33 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       );
       message.channel.send(`Cabinet with ID ${cabinet._id} has been approved.`);
     }
+    if (cmd === "verify") {
+      const check = await Cabinet.findById(args[0]);
+      if (check) {
+        if (check.verified)
+          return message.channel.send(
+            `Cabinet with ID ${check._id} is already verified`
+          );
+      } else if (!check) {
+        return message.channel.send(
+          "Cabinet with that ID does not exist in the FTTx.gr database"
+        );
+      }
+
+      const cabinet = await Cabinet.findByIdAndUpdate(
+        args[1],
+        { verified: true },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      console.log(
+        `Cabinet with ID ${cabinet._id} has been verified by ${message.author.tag}`
+          .red
+      );
+      message.channel.send(`Cabinet with ID ${cabinet._id} has been verified.`);
+    }
     if (cmd === "status") {
       const stats = await fetch("https://api.fttx.gr").then((r) => r.json());
       message.channel.send(

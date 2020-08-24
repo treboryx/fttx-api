@@ -56,7 +56,7 @@ exports.createCabinet = asyncHandler(async (req, res, next) => {
 
   submit(
     `New cabinet added with ID ${cabinet._id} by ${
-      cabinet.nickname ? cabinet.nickname : "Unknown"
+      cabinet.username ? cabinet.username : "Unknown"
     }`
   );
 });
