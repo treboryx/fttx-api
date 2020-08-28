@@ -22,7 +22,7 @@ const CabinetSchema = new mongoose.Schema({
   },
   isp: {
     type: String,
-    enum: ["Vodafone", "OTE", "WIND", "Unknown"],
+    enum: ["Vodafone", "OTE", "WIND", "Unknown", "RURALCONNECT"],
     default: "Unknown",
   },
   img_url: String,
@@ -35,6 +35,14 @@ const CabinetSchema = new mongoose.Schema({
     default: false,
   },
   username: { type: String, default: "Unknown" },
+  email: {
+    type: String,
+    required: false,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please add a valid email",
+    ],
+  },
   createdAt: Date,
 });
 

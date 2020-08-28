@@ -25,6 +25,14 @@ const CenterSchema = new mongoose.Schema({
     default: false,
   },
   username: { type: String, default: "Unknown" },
+  email: {
+    type: String,
+    required: false,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please add a valid email",
+    ],
+  },
   createdAt: Date,
 });
 
