@@ -103,6 +103,16 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       }
       message.channel.send(check);
     }
+    if (cmd === "deletecabinet") {
+      const check = await Cabinet.findById(args[1]);
+      if (!check) {
+        return message.channel.send(
+          "Cabinet with that ID does not exist in the FTTx.gr database"
+        );
+      }
+      await check.remove();
+      message.channel.send("Cabinet has been removed from the database.");
+    }
   });
 
   client.login(process.env.DISCORD_TOKEN);
