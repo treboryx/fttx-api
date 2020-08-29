@@ -24,7 +24,11 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       .trim()
       .split(/ +/g);
     const cmd = args[0];
+    const validation = (args) => {
+      if (!args[1]) return message.channel.send("No input provided!");
+    };
     if (cmd === "approve") {
+      validation();
       const check = await Cabinet.findById(args[1]);
       if (check) {
         if (check.approved)
@@ -52,6 +56,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       message.channel.send(`Cabinet with ID ${cabinet._id} has been approved.`);
     }
     if (cmd === "verify") {
+      validation();
       const check = await Cabinet.findById(args[1]);
       if (check) {
         if (check.verified)
@@ -89,6 +94,7 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
       );
     }
     if (cmd === "kvinfo" || cmd === "cabinetinfo") {
+      validation();
       const check = await Cabinet.findById(args[1]);
       if (!check) {
         return message.channel.send(
