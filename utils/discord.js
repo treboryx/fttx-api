@@ -88,6 +88,15 @@ if (process.env.DISCORD_TOKEN && process.env.DISCORD_CHANNEL) {
         }`
       );
     }
+    if (cmd === "kvinfo" || cmd === "cabinetinfo") {
+      const check = await Cabinet.findById(args[1]);
+      if (!check) {
+        return message.channel.send(
+          "Cabinet with that ID does not exist in the FTTx.gr database"
+        );
+      }
+      message.channel.send(check);
+    }
   });
 
   client.login(process.env.DISCORD_TOKEN);

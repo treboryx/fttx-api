@@ -57,7 +57,9 @@ exports.createCabinet = asyncHandler(async (req, res, next) => {
   submit(
     `New cabinet added with ID ${cabinet._id} by ${
       cabinet.username ? cabinet.username : "Unknown"
-    }`
+    }\n${cabinet.isp}/${cabinet.type}/${
+      cabinet.img_url ? cabinet.img_url : "No image"
+    }/${cabinet.address.full}`
   );
 });
 
