@@ -102,5 +102,5 @@ app.listen(
 process.on("unhandledRejection", (err, promise) => {
   console.log(`Error: ${err.message}`.red);
   // Close server & exit process
-  // server.close(() => process.exit(1)); // commented out because I want the app to restart, which is what PM2 will do :~)
+  server.close(() => process.exit(1));
 });
